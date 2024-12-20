@@ -42,7 +42,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                 .requestMatchers("/", "user/register").permitAll()
                 .anyRequest().authenticated())
-                .formLogin(formLogin -> formLogin.permitAll());
+                .formLogin(formLogin -> formLogin.permitAll().defaultSuccessUrl("/"));
 
         return http.build();
     }
