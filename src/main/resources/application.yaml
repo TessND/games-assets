@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: games-assets
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/itch_clone
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+    properties:
+      hibernate:
+        format-sql: true
+
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+      
+  
