@@ -10,6 +10,7 @@
     <div th:if="${error}" class="alert alert-danger" role="alert">
         <p th:text="${error}"></p>
     </div>
+    
     <form th:action="@{/user/register}" th:object="${user}" method="post">
         <div>
             <label for="username">Username:</label>

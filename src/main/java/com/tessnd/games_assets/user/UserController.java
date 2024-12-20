@@ -32,7 +32,7 @@ public class UserController {
             return "redirect:/login";
         } catch (UsernameAlreadyTakenException | EmailAlreadyTakenException e) {
             model.addAttribute("error", e.getMessage());
-            return "redirect:/user/register?error=" + e.getMessage();
+            return "redirect:/user/register" + e.getMessage();
         }
     }
 }
