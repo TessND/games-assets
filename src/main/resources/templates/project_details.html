@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Project Details</title>
+</head>
+<body>
+    <h1 th:text="${project.title}"></h1>
+    <p th:text="${project.description}"></p>
+    <a th:text="${project.link}"></a>
+    <div th:if="${isProjectOwner}">
+        <a th:href="@{/project/{id}/edit(id=${project.id})}">Edit</a>
+        <a th:href="@{/project/{id}/delete(id=${project.id})}">Delete</a>
+    </div>
+</body>
+</html>

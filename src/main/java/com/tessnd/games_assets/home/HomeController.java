@@ -12,9 +12,4 @@ public class HomeController {
     public String home(Model model) {
         return "home";
     }
-    
-    @GetMapping("/secret_page")
-    public String secretPage(Model model) {
-        return "secret_page";
-    }
 }
