@@ -28,7 +28,7 @@ public class Project {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 

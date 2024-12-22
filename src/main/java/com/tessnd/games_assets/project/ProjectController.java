@@ -63,7 +63,7 @@ public class ProjectController {
         return "redirect:/project/list";
     }
 
-    @DeleteMapping("/{id}/delete")
+    @GetMapping("/{id}/delete")
     public String deleteProject(@PathVariable Long id, Principal principal, Model model) {
         if (!projectService.isProjectOwner(id, principal.getName())) {
             return "redirect:/project/list";
@@ -73,10 +73,6 @@ public class ProjectController {
     }
     
     
-
-
-
-
 
 
 
