@@ -1,6 +1,7 @@
 package com.tessnd.games_assets.user;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.tessnd.games_assets.user.exceptions.EmailAlreadyTakenException;
 import com.tessnd.games_assets.user.exceptions.UsernameAlreadyTakenException;
+
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class UserService {
@@ -44,5 +47,23 @@ public class UserService {
         userToSave.setRoles(roles);
 
         return userRepository.save(userToSave);
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username).get();
+    }
+
+    @PostConstruct
+    public void init() {
+        createRoleIfNotFound("USER");
+    }
+
+    private void createRoleIfNotFound(String name) {
+        Optional<Role> role = roleRepository.findByName(name);
+        if (!role.isPresent()) {
+            Role newRole = new Role();
+            newRole.setName(name);
+            roleRepository.save(newRole);
+        }
     }
 }

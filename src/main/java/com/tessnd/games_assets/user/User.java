@@ -40,7 +40,7 @@ public class User {
     @Email
     private String email;
 
-    //many to many relationship with roles
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

@@ -1,22 +1,49 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Project List</title>
+    <title>Список проектов</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Project List</h1>
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Link</th>
-        </tr>
-        <tr th:each="project : ${projects}">
-            <td><a th:href="@{/project/{id}(id=${project.id})}" th:text="${project.title}"></a></td>
-            <td th:text="${project.description}"></td>
-            <td th:text="${project.link}"></td>
-        </tr>
-    </table>
-    <a th:href="@{/project/create}">Create New Project</a>
+    <div class="container mt-4">
+        <h1 class="mb-4">Список проектов</h1>
+
+        <!-- Table for displaying projects -->
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Название</th>
+                    <th>Описание</th>
+                    <th>Ссылка</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="project : ${projects}">
+                    <td>
+                        <a th:href="@{/project/{id}(id=${project.id})}" th:text="${project.title}"></a>
+                    </td>
+                    <td th:text="${project.description}"></td>
+                    <td>
+                        <a th:href="${project.link}" target="_blank" th:text="${project.link}"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Button to create a new project -->
+        <div class="mt-4">
+            <a th:href="@{/project/create}" class="btn btn-primary">Создать новый проект</a>
+        </div>
+
+        <!-- Button to go back to the home page -->
+        <div class="mt-4">
+            <a th:href="@{/}" class="btn btn-secondary">На главную страницу</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

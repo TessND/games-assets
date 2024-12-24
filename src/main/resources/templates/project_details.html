@@ -7,9 +7,21 @@
     <h1 th:text="${project.title}"></h1>
     <p th:text="${project.description}"></p>
     <a th:text="${project.link}"></a>
+
     <div th:if="${isProjectOwner}">
         <a th:href="@{/project/{id}/edit(id=${project.id})}">Edit</a>
         <a th:href="@{/project/{id}/delete(id=${project.id})}">Delete</a>
     </div>
+    
+    <h2>Comments</h2>
+    <ul>
+        <li th:each="comment : ${comments}">
+            <p th:text="${comment.text}"></p>
+            <p th:text="${comment.user.username}"></p>
+        </li>
+    </ul>
+
+    <a th:href="@{/project/{id}/comments/create(id=${project.id})}">Add Comment</a>
+    <a th:href="@{/project/list}">Back to Projects</a>
 </body>
 </html>

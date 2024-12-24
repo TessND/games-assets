@@ -20,5 +20,8 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
 
+file:
+  upload-dir: uploads
+
       
   

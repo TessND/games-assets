@@ -1,16 +1,28 @@
 package com.tessnd.games_assets.project;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.tessnd.games_assets.comment.Comment;
+import com.tessnd.games_assets.comment.CommentCreateDTO;
+import com.tessnd.games_assets.comment.CommentService;
+import com.tessnd.games_assets.user.UserService;
+
 
 @Controller
 @RequestMapping("/project")
@@ -18,6 +30,13 @@ public class ProjectController {
     
     @Autowired
     private ProjectService projectService;
+
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CommentService commentService;
 
     @GetMapping("/list")
     public String showProjectList(Model model) {
@@ -29,6 +48,7 @@ public class ProjectController {
     public String showProjectDetails(@PathVariable Long id, Model model, Principal principal) {
         model.addAttribute("isProjectOwner", projectService.isProjectOwner(id, principal.getName()));
         model.addAttribute("project", projectService.getProjectById(id));
+        model.addAttribute("comments", commentService.getAllByProject(projectService.getProjectById(id)));
         return "project_details";
     }
 
@@ -40,7 +60,7 @@ public class ProjectController {
     }
 
     @PostMapping("/create")
-    public String createProject(@ModelAttribute ProjectCreateDTO project, Model model, Principal principal) {
+    public String createProject(@ModelAttribute ProjectCreateDTO project, Model model, Principal principal) throws IOException {
         projectService.saveProject(project, principal.getName());
         return "redirect:/project/list";
     }
@@ -71,6 +91,27 @@ public class ProjectController {
         projectService.deleteProject(id);
         return "redirect:/project/list";
     }
+
+    @GetMapping("/{id}/comments/create")
+    public String showCommentCreationForm(@PathVariable Long id, Model model) {
+        model.addAttribute("comment", new Comment());
+        model.addAttribute("project", projectService.getProjectById(id));
+        return "comment_create";
+    }
+
+
+    @PostMapping("/{id}/comments/create")
+    public String createComment(@PathVariable Long id, @ModelAttribute CommentCreateDTO comment, Model model, Principal principal) {
+        commentService.save(comment, userService.getUserByUsername(principal.getName()), projectService.getProjectById(id));
+        return "redirect:/project/" + id;
+    }
+
+
+        
+
+
+
+
     
     
 
