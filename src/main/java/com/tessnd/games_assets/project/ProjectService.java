@@ -37,6 +37,15 @@ public class ProjectService {
     @Autowired
     private ProjectTypeService projectTypeService;
 
+
+    public List<Project> getAllProjects() {
+        return projectRepository.findAll();
+    }
+
+    public Project getProjectById(Long id) {
+        return projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException("Project not found"));
+    }
+
     @Transactional
     public Project saveProject(ProjectCreateDTO project, String username) throws IOException{
 
@@ -48,14 +57,6 @@ public class ProjectService {
         projectToSave.setUser(userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found")));
         projectToSave.setFilePath(fileService.save(project.getFile()));
         return projectRepository.save(projectToSave);
-    }
-
-    public List<Project> getAllProjects() {
-        return projectRepository.findAll();
-    }
-
-    public Project getProjectById(Long id) {
-        return projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException("Project not found"));
     }
 
     @Transactional

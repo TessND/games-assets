@@ -2,27 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Project Details</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1 th:text="${project.title}"></h1>
-    <p th:text="${project.description}"></p>
-    <a th:text="${project.link}"></a>
-    
+<body class="bg-light">
+    <div class="container mt-5">
+        <!-- Project Details -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h1 class="card-title" th:text="${project.title}"></h1>
+                <p class="card-text" th:text="${project.description}"></p>
+                <a th:href="${project.link}" class="card-link" th:text="${project.link}"></a>
+                <p class="text-muted" th:text="'Type: ' + ${project.projectType.name}"></p>
+            </div>
+            <a th:href="@{/project/{id}/download(id=${project.id})}" class="btn btn-info mr-2">Download</a>
+            <!-- Edit and Delete Buttons for Project Owner -->
+            <div class="card-footer" th:if="${isProjectOwner}">
+                <a th:href="@{/project/{id}/edit(id=${project.id})}" class="btn btn-primary mr-2">Edit</a>
+                <a th:href="@{/project/{id}/delete(id=${project.id})}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
 
-    <div th:if="${isProjectOwner}">
-        <a th:href="@{/project/{id}/edit(id=${project.id})}">Edit</a>
-        <a th:href="@{/project/{id}/delete(id=${project.id})}">Delete</a>
+        <!-- Comments Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Comments</h2>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item" th:each="comment : ${comments}">
+                        <p class="mb-1" th:text="${comment.text}"></p>
+                        <small class="text-muted" th:text="'Posted by: ' + ${comment.user.username}"></small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Add Comment Button -->
+        <div class="mt-4">
+            <a th:href="@{/project/{id}/comments/create(id=${project.id})}" class="btn btn-success">Add Comment</a>
+            <a th:href="@{/project/list}" class="btn btn-secondary">Back to Projects</a>
+        </div>
     </div>
-    
-    <h2>Comments</h2>
-    <ul>
-        <li th:each="comment : ${comments}">
-            <p th:text="${comment.text}"></p>
-            <p th:text="${comment.user.username}"></p>
-        </li>
-    </ul>
 
-    <a th:href="@{/project/{id}/comments/create(id=${project.id})}">Add Comment</a>
-    <a th:href="@{/project/list}">Back to Projects</a>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
