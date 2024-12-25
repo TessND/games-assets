@@ -53,4 +53,9 @@ public class FileService {
         
         
     }
+
+    public void delete(String fileName) throws IOException {
+        Path filePath = Paths.get(fileName);
+        Files.delete(filePath);
+    }
 }

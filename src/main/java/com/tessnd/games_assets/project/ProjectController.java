@@ -102,7 +102,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteProject(@PathVariable Long id, Principal principal, Model model) {
+    public String deleteProject(@PathVariable Long id, Principal principal, Model model) throws IOException {
         if (!projectService.isProjectOwner(id, principal.getName())) {
             return "redirect:/project/list";
         }

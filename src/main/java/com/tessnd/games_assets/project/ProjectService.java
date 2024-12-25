@@ -60,11 +60,12 @@ public class ProjectService {
     }
 
     @Transactional
-    public void deleteProject(Long id) {
+    public void deleteProject(Long id) throws IOException {
         if (!projectRepository.existsById(id)) {
             throw new ProjectNotFoundException("Project not found");
         }
         commentService.deleteAllByProjectId(id);
+        fileService.delete(getProjectById(id).getFilePath());
         projectRepository.deleteById(id);
     }
 
@@ -74,6 +75,7 @@ public class ProjectService {
         projectToEdit.setTitle(project.getTitle());
         projectToEdit.setDescription(project.getDescription());
         projectToEdit.setLink(project.getLink());
+        projectToEdit.setProjectType(projectTypeService.getProjectTypeById(project.getProjectTypeId()));
         projectToEdit.setUser(projectToEdit.getUser());
         projectToEdit.setFilePath(fileService.save(project.getFile()));
         return projectRepository.save(projectToEdit);
