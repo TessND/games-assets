@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.tessnd.games_assets.comment.CommentService;
+import com.tessnd.games_assets.file.FileService;
 import com.tessnd.games_assets.project.exceptions.ProjectNotFoundException;
 import com.tessnd.games_assets.user.UserRepository;
 
@@ -27,11 +28,11 @@ public class ProjectService {
     @Autowired
     private UserRepository userRepository;
 
-
     @Autowired
     private CommentService commentService;
     
-
+    @Autowired
+    private FileService fileService;
 
     @Transactional
     public Project saveProject(ProjectCreateDTO project, String username) throws IOException{
@@ -41,8 +42,8 @@ public class ProjectService {
         projectToSave.setDescription(project.getDescription());
         projectToSave.setLink(project.getLink());
         projectToSave.setUser(userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found")));
+        projectToSave.setFilePath(fileService.save(project.getFile()));
         return projectRepository.save(projectToSave);
-
     }
 
     public List<Project> getAllProjects() {
@@ -63,12 +64,13 @@ public class ProjectService {
     }
 
     @Transactional
-    public Project editProject(Long id, ProjectCreateDTO project) {
+    public Project editProject(Long id, ProjectCreateDTO project) throws IOException {
         Project projectToEdit = getProjectById(id);
         projectToEdit.setTitle(project.getTitle());
         projectToEdit.setDescription(project.getDescription());
         projectToEdit.setLink(project.getLink());
         projectToEdit.setUser(projectToEdit.getUser());
+        projectToEdit.setFilePath(fileService.save(project.getFile()));
         return projectRepository.save(projectToEdit);
     }
 

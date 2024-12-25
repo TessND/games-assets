@@ -34,7 +34,8 @@ public class Project {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String fileName;
     
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String filePath;
 }

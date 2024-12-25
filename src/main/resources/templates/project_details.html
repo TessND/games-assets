@@ -7,6 +7,7 @@
     <h1 th:text="${project.title}"></h1>
     <p th:text="${project.description}"></p>
     <a th:text="${project.link}"></a>
+    
 
     <div th:if="${isProjectOwner}">
         <a th:href="@{/project/{id}/edit(id=${project.id})}">Edit</a>

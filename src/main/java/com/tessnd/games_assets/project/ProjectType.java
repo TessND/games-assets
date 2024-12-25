@@ -1,8 +1,4 @@
-package com.tessnd.games_assets.forum;
-
-import java.time.LocalDateTime;
-
-import org.springframework.data.annotation.CreatedDate;
+package com.tessnd.games_assets.project;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,14 +9,12 @@ import lombok.Data;
 
 @Entity
 @Data
-public class ForumMessage {
+public class ProjectType {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TEXT")
-    private String content;
-
-    @CreatedDate
-    private LocalDateTime createdAt;
+    @Column(nullable = false)
+    private String name;
 }

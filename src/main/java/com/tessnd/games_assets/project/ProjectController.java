@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.tessnd.games_assets.comment.Comment;
 import com.tessnd.games_assets.comment.CommentCreateDTO;
 import com.tessnd.games_assets.comment.CommentService;
+import com.tessnd.games_assets.file.FileService;
 import com.tessnd.games_assets.user.UserService;
 
 
@@ -37,6 +38,9 @@ public class ProjectController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private FileService fileService;
 
     @GetMapping("/list")
     public String showProjectList(Model model) {
@@ -55,7 +59,7 @@ public class ProjectController {
 
     @GetMapping("/create")
     public String showProjectCreationForm(Model model) {
-        model.addAttribute("project", new Project());
+        model.addAttribute("project", new ProjectCreateDTO());
         return "project_create";
     }
 
@@ -63,6 +67,16 @@ public class ProjectController {
     public String createProject(@ModelAttribute ProjectCreateDTO project, Model model, Principal principal) throws IOException {
         projectService.saveProject(project, principal.getName());
         return "redirect:/project/list";
+    }
+
+    @GetMapping("/{id}/download")
+    public ResponseEntity<Resource> downloadFile(@PathVariable Long id, Model model) throws IOException {
+        String filePath = projectService.getProjectById(id).getFilePath();
+        Resource fileResource = fileService.load(filePath);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileResource.getFilename() + "\"")
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(fileResource);
     }
 
     @GetMapping("/{id}/edit")
@@ -75,7 +89,7 @@ public class ProjectController {
     }
 
     @PostMapping("/{id}/edit")
-    public String editProject(@PathVariable Long id, @ModelAttribute ProjectCreateDTO project, Model model, Principal principal) {
+    public String editProject(@PathVariable Long id, @ModelAttribute ProjectCreateDTO project, Model model, Principal principal) throws IOException {
         if (!projectService.isProjectOwner(id, principal.getName())) {
             return "redirect:/project/list";
         }
