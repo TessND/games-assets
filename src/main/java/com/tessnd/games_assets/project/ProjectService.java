@@ -34,6 +34,9 @@ public class ProjectService {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private ProjectTypeService projectTypeService;
+
     @Transactional
     public Project saveProject(ProjectCreateDTO project, String username) throws IOException{
 
@@ -41,6 +44,7 @@ public class ProjectService {
         projectToSave.setTitle(project.getTitle());
         projectToSave.setDescription(project.getDescription());
         projectToSave.setLink(project.getLink());
+        projectToSave.setProjectType(projectTypeService.getProjectTypeById(project.getProjectTypeId()));
         projectToSave.setUser(userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found")));
         projectToSave.setFilePath(fileService.save(project.getFile()));
         return projectRepository.save(projectToSave);

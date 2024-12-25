@@ -38,4 +38,9 @@ public class Project {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String filePath;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "project_type_id", nullable = false)
+    private ProjectType projectType;
+
 }

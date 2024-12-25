@@ -1,60 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Главная</title>
+    <title>Home</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
         
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Моя Платформа</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" th:href="@{/project/list}">Проекты <span class="sr-only">(текущая)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/forum}">Форум</a>
-                    </li>
-                    <!-- Добавьте больше ссылок навигации здесь, если нужно -->
-                </ul>
-            </div>
-        </nav>
-
+        <div th:insert="header :: header"></div>
+        
+        
         <div class="row mt-4">
             <div class="col-md-6">
-                <h2>Почему выбирают нас?</h2>
-                <p>Наша платформа создана, чтобы помочь вам:</p>
+                <h2>Why Choose Us?</h2>
+                <p>Our platform is designed to help you:</p>
                 <ul>
-                    <li>Легко создавать и управлять проектами.</li>
-                    <li>Делиться проектами с понятным названием, описанием и ссылкой.</li>
-                    <li>Совместно работать с другими через форум.</li>
-                    <li>Быть организованными и сосредоточенными на своих целях.</li>
+                    <li>Easily create and manage projects.</li>
+                    <li>Share your projects with a clear title, description, and link.</li>
+                    <li>Collaborate with others through the forum.</li>
+                    <li>Stay organized and focused on your goals.</li>
                 </ul>
             </div>
             <div class="col-md-6">
-                <h2>Начните прямо сейчас</h2>
-                <p>Готовы начать свой следующий проект? Нажмите ниже, чтобы начать!</p>
-                <a class="btn btn-success" th:href="@{/project/list}">Посмотреть проекты</a>
-                <a class="btn btn-secondary ml-2" th:href="@{/forum}">Посетить форум</a>
+                <h2>Get Started</h2>
+                <p>Ready to start your next project? Click below to begin!</p>
+                <a class="btn btn-success" th:href="@{/project/list}">View Projects</a>
+                <a class="btn btn-secondary ml-2" th:href="@{/forum}">Visit Forum</a>
             </div>
-        </div>
-        
-        <div class="jumbotron text-center mt-4">
-            <h1 class="display-4">Добро пожаловать на нашу платформу!</h1>
-            <p class="lead">Место для обмена, совместной работы и демонстрации ваших проектов.</p>
-            <hr class="my-4">
-            <p>Создавайте, управляйте и изучайте проекты с легкостью. Независимо от того, работаете ли вы в одиночку или в команде, наша платформа поможет вам организовать и делиться своими идеями эффективно.</p>
-            <a class="btn btn-primary btn-lg" th:href="@{/project/list}" role="button">Посмотреть проекты</a>
+            <div class="jumbotron text-center mt-4">
+                <h1 class="display-4">Welcome to Our Platform!</h1>
+                <p class="lead">A place to share, collaborate, and showcase your projects.</p>
+                <hr class="my-4">
+                <p>Create, manage, and explore projects with ease. Whether you're working solo or as part of a team, our platform is designed to help you organize and share your ideas effectively.</p>
+                <a class="btn btn-primary btn-lg" th:href="@{/project/list}" role="button">Explore Projects</a>
+            </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS и зависимости -->
+    <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

@@ -9,6 +9,7 @@ public class ProjectCreateDTO {
     private String title;
     private String description;
     private String link;
-    private ProjectType type;
+    private Long projectTypeId;
     private MultipartFile file;
 }
+       

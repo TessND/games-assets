@@ -42,6 +42,9 @@ public class ProjectController {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private ProjectTypeService projectTypeService;
+
     @GetMapping("/list")
     public String showProjectList(Model model) {
         model.addAttribute("projects", projectService.getAllProjects());
@@ -60,6 +63,7 @@ public class ProjectController {
     @GetMapping("/create")
     public String showProjectCreationForm(Model model) {
         model.addAttribute("project", new ProjectCreateDTO());
+        model.addAttribute("projectTypes", projectTypeService.getAllProjectTypes());
         return "project_create";
     }
 

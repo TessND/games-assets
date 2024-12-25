@@ -25,6 +25,19 @@
                 <input type="text" id="link" th:field="*{link}" class="form-control" required>
                 <div class="invalid-feedback">Пожалуйста, введите ссылку на проект.</div>
             </div>
+
+            <div class="form-group">
+                <label for="projectTypeId">Тип проекта:</label>
+                <select id="projectTypeId" th:field="*{projectTypeId}" class="form-control" required>
+                    <option value="">Выберите тип проекта</option>
+                    <option th:each="projectType : ${projectTypes}"
+                            th:value="${projectType.id}"
+                            th:text="${projectType.name}">
+                    </option>
+                </select>
+                <div class="invalid-feedback">Пожалуйста, выберите тип проекта.</div>
+            </div>
+            
             <!-- Add this after the other form fields -->
             <div class="form-group">
                 <label for="file">Файл:</label>

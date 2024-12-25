@@ -1,12 +1,12 @@
 package com.tessnd.games_assets.project;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
-import lombok.AllArgsConstructor;
 
 @Service
 
@@ -14,6 +14,14 @@ public class ProjectTypeService {
 
     @Autowired
     private ProjectTypeRepository projectTypeRepository;
+    
+    public List<ProjectType> getAllProjectTypes() {
+        return projectTypeRepository.findAll();
+    }
+
+    public ProjectType getProjectTypeById(Long id) {
+        return projectTypeRepository.findById(id).orElse(null);
+    }
 
     @PostConstruct
     public void init() {
@@ -32,5 +40,7 @@ public class ProjectTypeService {
             projectTypeRepository.save(newType);
         }           
     }
+
+    
     
 }
