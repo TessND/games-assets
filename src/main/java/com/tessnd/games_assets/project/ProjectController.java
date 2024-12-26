@@ -22,6 +22,7 @@ import com.tessnd.games_assets.comment.Comment;
 import com.tessnd.games_assets.comment.CommentCreateDTO;
 import com.tessnd.games_assets.comment.CommentService;
 import com.tessnd.games_assets.file.FileService;
+import com.tessnd.games_assets.project.exceptions.ProjectNotFoundException;
 import com.tessnd.games_assets.user.UserService;
 
 
@@ -53,21 +54,28 @@ public class ProjectController {
 
     @GetMapping("/{id}")
     public String showProjectDetails(@PathVariable Long id, Model model, Principal principal) {
-        if (projectService.getProjectById(id) == null) {
+        try {
+            model.addAttribute("isProjectOwner", projectService.isProjectOwner(id, principal.getName()));
+            model.addAttribute("project", projectService.getProjectById(id));
+            model.addAttribute("comments", commentService.getAllByProject(projectService.getProjectById(id)));
+            return "project_details";
+        }
+        catch (ProjectNotFoundException e) {
             return "redirect:/project/list";
         }
-        model.addAttribute("isProjectOwner", projectService.isProjectOwner(id, principal.getName()));
-        model.addAttribute("project", projectService.getProjectById(id));
-        model.addAttribute("comments", commentService.getAllByProject(projectService.getProjectById(id)));
-        return "project_details";
+        
     }
 
 
     @GetMapping("/create")
     public String showProjectCreationForm(Model model) {
-        model.addAttribute("project", new ProjectCreateDTO());
-        model.addAttribute("projectTypes", projectTypeService.getAllProjectTypes());
-        return "project_create";
+        try {
+            model.addAttribute("project", new ProjectCreateDTO());
+            model.addAttribute("projectTypes", projectTypeService.getAllProjectTypes());
+            return "project_create";
+        } catch (Exception e) {
+            return "redirect:/project/list";
+        }
     }
 
     @PostMapping("/create")
@@ -78,73 +86,86 @@ public class ProjectController {
 
     @GetMapping("/{id}/download")
     public ResponseEntity<Resource> downloadFile(@PathVariable Long id, Model model) throws IOException {
-        if (projectService.getProjectById(id) == null) {
+        try {
+            String filePath = projectService.getProjectById(id).getFilePath();
+            Resource fileResource = fileService.load(filePath);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileResource.getFilename() + "\"")
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(fileResource);
+        } catch (ProjectNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
-        String filePath = projectService.getProjectById(id).getFilePath();
-        Resource fileResource = fileService.load(filePath);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileResource.getFilename() + "\"")
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(fileResource);
+        
     }
 
     @GetMapping("/{id}/edit")
     public String showProjectEditForm(@PathVariable Long id, Model model, Principal principal) {
-        if (projectService.getProjectById(id) == null) {
-            return "redirect:/project/list";
-        }
         if (!projectService.isProjectOwner(id, principal.getName())) {
             return "redirect:/project/list";
         }
-        model.addAttribute("projectIdToEdit", id);
-        model.addAttribute("project", new ProjectCreateDTO());
-        model.addAttribute("projectTypes", projectTypeService.getAllProjectTypes());
-        return "project_edit";
+        try {
+            model.addAttribute("projectIdToEdit", id);
+            model.addAttribute("project", new ProjectCreateDTO());
+            model.addAttribute("projectTypes", projectTypeService.getAllProjectTypes());
+            return "project_edit";
+        } catch (ProjectNotFoundException e) {
+            return "redirect:/project/list";
+        }
+        
     }
 
     @PostMapping("/{id}/edit")
     public String editProject(@PathVariable Long id, @ModelAttribute ProjectCreateDTO project, Model model, Principal principal) throws IOException {
-        if (projectService.getProjectById(id) == null) {
-            return "redirect:/project/list";
-        }
         if (!projectService.isProjectOwner(id, principal.getName())) {
             return "redirect:/project/list";
         }
-        projectService.editProject(id, project);
-        return "redirect:/project/list";
+        try {
+            projectService.editProject(id, project);
+            return "redirect:/project/list";
+        } catch (ProjectNotFoundException e) {
+            return "redirect:/project/list";
+        }
+        
     }
 
     @GetMapping("/{id}/delete")
     public String deleteProject(@PathVariable Long id, Principal principal, Model model) throws IOException {
-        if (projectService.getProjectById(id) == null) {
-            return "redirect:/project/list";
-        }
         if (!projectService.isProjectOwner(id, principal.getName())) {
             return "redirect:/project/list";
         }
-        projectService.deleteProject(id);
-        return "redirect:/project/list";
+        try {
+            projectService.deleteProject(id);
+            return "redirect:/project/list";
+        } catch (ProjectNotFoundException e) {
+            return "redirect:/project/list";
+        }
+        
     }
 
     @GetMapping("/{id}/comments/create")
     public String showCommentCreationForm(@PathVariable Long id, Model model) {
-        if (projectService.getProjectById(id) == null) {
+        try {
+            model.addAttribute("comment", new Comment());
+            model.addAttribute("project", projectService.getProjectById(id));
+            return "comment_create";
+        } catch (ProjectNotFoundException e) {
             return "redirect:/project/list";
         }
-        model.addAttribute("comment", new Comment());
-        model.addAttribute("project", projectService.getProjectById(id));
-        return "comment_create";
+       
     }
 
 
     @PostMapping("/{id}/comments/create")
     public String createComment(@PathVariable Long id, @ModelAttribute CommentCreateDTO comment, Model model, Principal principal) {
-        if (projectService.getProjectById(id) == null) {
+        try {
+            commentService.save(comment, userService.getUserByUsername(principal.getName()), projectService.getProjectById(id));
+            return "redirect:/project/" + id;
+        }
+        catch (ProjectNotFoundException e) {
             return "redirect:/project/list";
         }
-        commentService.save(comment, userService.getUserByUsername(principal.getName()), projectService.getProjectById(id));
-        return "redirect:/project/" + id;
+        
     }
 
 
