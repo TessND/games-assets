@@ -40,10 +40,12 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                .requestMatchers("/", "user/register").permitAll()
+                .requestMatchers("/", "user/register", "/login").permitAll()
                 .requestMatchers("/project/**").authenticated()
                 .anyRequest().authenticated())
-                .formLogin(formLogin -> formLogin.permitAll().defaultSuccessUrl("/project/list"));
+                .formLogin(formLogin -> formLogin.permitAll()
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/project/list"));
 
         return http.build();
     }

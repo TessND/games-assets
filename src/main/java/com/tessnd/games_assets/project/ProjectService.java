@@ -52,7 +52,6 @@ public class ProjectService {
         Project projectToSave = new Project();
         projectToSave.setTitle(project.getTitle());
         projectToSave.setDescription(project.getDescription());
-        projectToSave.setLink(project.getLink());
         projectToSave.setProjectType(projectTypeService.getProjectTypeById(project.getProjectTypeId()));
         projectToSave.setUser(userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found")));
         projectToSave.setFilePath(fileService.save(project.getFile()));
@@ -74,9 +73,9 @@ public class ProjectService {
         Project projectToEdit = getProjectById(id);
         projectToEdit.setTitle(project.getTitle());
         projectToEdit.setDescription(project.getDescription());
-        projectToEdit.setLink(project.getLink());
         projectToEdit.setProjectType(projectTypeService.getProjectTypeById(project.getProjectTypeId()));
         projectToEdit.setUser(projectToEdit.getUser());
+        fileService.delete(projectToEdit.getFilePath());
         projectToEdit.setFilePath(fileService.save(project.getFile()));
         return projectRepository.save(projectToEdit);
     }

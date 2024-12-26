@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Зарегистрироваться</title>
+    <title>Вход</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
@@ -10,41 +10,34 @@
         <!-- Include the header -->
         <div th:insert="header :: header"></div>
 
-        <!-- Registration Form -->
+        <!-- Login Form -->
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h2 class="text-center mt-5">Зарегистрироваться</h2>
+                <h2 class="text-center mt-5">Вход</h2>
 
                 <!-- Error message display -->
-                <div th:if="${error}" class="alert alert-danger mt-4" role="alert">
-                    <p th:text="${error}"></p>
+                <div th:if="${param.error}" class="alert alert-danger mt-4" role="alert">
+                    Неверный логин или пароль.
                 </div>
 
-                <form th:action="@{/user/register}" th:object="${user}" method="post" class="needs-validation" novalidate>
+                <form th:action="@{/login}" method="post" class="needs-validation" novalidate>
                     <!-- Username Field -->
                     <div class="form-group">
-                        <label for="username">Имя пользователя:</label>
-                        <input type="text" id="username" name="username" th:field="*{username}" class="form-control" required>
-                        <div class="invalid-feedback">Пожалуйста, введите имя пользователя.</div>
-                    </div>
-
-                    <!-- Email Field -->
-                    <div class="form-group">
-                        <label for="email">Электронная почта:</label>
-                        <input type="email" id="email" name="email" th:field="*{email}" class="form-control" required>
-                        <div class="invalid-feedback">Пожалуйста, введите корректный адрес электронной почты.</div>
+                        <label for="username">Логин</label>
+                        <input type="text" id="username" name="username" class="form-control" required>
+                        <div class="invalid-feedback">Пожалуйста, введите логин.</div>
                     </div>
 
                     <!-- Password Field -->
                     <div class="form-group">
-                        <label for="password">Пароль:</label>
-                        <input type="password" id="password" name="password" th:field="*{password}" class="form-control" required>
+                        <label for="password">Пароль</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
                         <div class="invalid-feedback">Пожалуйста, введите пароль.</div>
                     </div>
 
                     <!-- Submit Button -->
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
+                        <button type="submit" class="btn btn-primary btn-block">Войти</button>
                     </div>
                 </form>
             </div>

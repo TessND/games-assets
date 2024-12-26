@@ -8,7 +8,6 @@ import lombok.Data;
 public class ProjectCreateDTO {
     private String title;
     private String description;
-    private String link;
     private Long projectTypeId;
     private MultipartFile file;
 }

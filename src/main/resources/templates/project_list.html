@@ -15,7 +15,6 @@
                 <tr>
                     <th>Название</th>
                     <th>Описание</th>
-                    <th>Ссылка</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,9 +23,6 @@
                         <a th:href="@{/project/{id}(id=${project.id})}" th:text="${project.title}"></a>
                     </td>
                     <td th:text="${project.description}"></td>
-                    <td>
-                        <a th:href="${project.link}" target="_blank" th:text="${project.link}"></a>
-                    </td>
                 </tr>
             </tbody>
         </table>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Create Comment</title>
+    <title>Добавить комментарий</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -9,18 +9,18 @@
     <div class="container mt-5">
         <div class="card">
             <div class="card-header">
-                <h1 class="card-title">Create Comment</h1>
+                <h1 class="card-title">Добавить комментарий</h1>
             </div>
             <div class="card-body">
                 <!-- Comment Form -->
                 <form th:action="@{/project/{id}/comments/create(id=${project.id})}" th:object="${comment}" method="post">
                     <div class="form-group">
-                        <label for="text">Comment:</label>
+                        <label for="text">Поле ввода:</label>
                         <textarea id="text" name="text" th:field="*{text}" class="form-control" rows="4" required></textarea>
-                        <div class="invalid-feedback">Please enter a comment.</div>
+                        <div class="invalid-feedback">Пожалуйста введите текст</div>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Post Comment" class="btn btn-primary"/>
+                        <input type="submit" value="Добавить" class="btn btn-primary"/>
                     </div>
                 </form>
             </div>

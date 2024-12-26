@@ -25,10 +25,10 @@ public class ProjectTypeService {
 
     @PostConstruct
     public void init() {
-        createProjectTypeIfNotFound("Game");
-        createProjectTypeIfNotFound("Mod");
-        createProjectTypeIfNotFound("Tool");
-        createProjectTypeIfNotFound("Asset");
+        createProjectTypeIfNotFound("Игра");
+        createProjectTypeIfNotFound("Модификация");
+        createProjectTypeIfNotFound("Инструмент");
+        createProjectTypeIfNotFound("Ресурс");
         
     }
         

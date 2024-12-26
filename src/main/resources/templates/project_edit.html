@@ -1,25 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Edit Project</title>
+    <title>Редактировать проект</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Edit Project</h1>
-    <form th:action="@{/project/{id}/edit(id=${project.id})}" th:object="${project}" method="post">
-        <div>
-            <label for="title">Title</label>
-            <input type="text" id="title" th:field="*{title}" required>
-        </div>
-        <div>
-            <label for="description">Description</label>
-            <textarea id="description" th:field="*{description}" required></textarea>
-        </div>
-        <div>
-            <label for="link">Link</label>
-            <input type="text" id="link" th:field="*{link}" required>
-        </div>
-        <button type="submit">Save Changes</button>
-    </form>
+    <div class="container mt-4">
+        <h1 class="mb-4">Редактировать проект</h1>
 
+        <!-- Form for editing a project -->
+        <form th:action="@{/project/{id}/edit(id=${projectIdToEdit})}" th:object="${project}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <!-- Title Field -->
+            <div class="form-group">
+                <label for="title">Название:</label>
+                <input type="text" id="title" th:field="*{title}" class="form-control" required>
+                <div class="invalid-feedback">Пожалуйста, введите название проекта.</div>
+            </div>
+
+            <!-- Description Field -->
+            <div class="form-group">
+                <label for="description">Описание:</label>
+                <textarea id="description" th:field="*{description}" class="form-control" rows="4" required></textarea>
+                <div class="invalid-feedback">Пожалуйста, введите описание проекта.</div>
+            </div>
+
+
+            <!-- Project Type Field -->
+            <div class="form-group">
+                <label for="projectTypeId">Тип проекта:</label>
+                <select id="projectTypeId" th:field="*{projectTypeId}" class="form-control" required>
+                    <option value="">Выберите тип проекта</option>
+                    <option th:each="projectType : ${projectTypes}"
+                            th:value="${projectType.id}"
+                            th:text="${projectType.name}">
+                    </option>
+                </select>
+                <div class="invalid-feedback">Пожалуйста, выберите тип проекта.</div>
+            </div>
+
+            <!-- File Field -->
+            <div class="form-group">
+                <label for="file">Файл:</label>
+                <input type="file" id="file" th:field="*{file}" class="form-control-file">
+                <div class="invalid-feedback">Пожалуйста, выберите файл для проекта.</div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript for form validation -->
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
 </body>
 </html>

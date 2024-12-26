@@ -88,7 +88,9 @@ public class ProjectController {
         if (!projectService.isProjectOwner(id, principal.getName())) {
             return "redirect:/project/list";
         }
-        model.addAttribute("project", projectService.getProjectById(id));
+        model.addAttribute("projectIdToEdit", id);
+        model.addAttribute("project", new ProjectCreateDTO());
+        model.addAttribute("projectTypes", projectTypeService.getAllProjectTypes());
         return "project_edit";
     }
 

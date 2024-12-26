@@ -1,43 +1,103 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Home</title>
+    <title>Главная</title>
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Иконки FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Пользовательские стили -->
+    <style>
+        /* Пользовательские стили */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://via.placeholder.com/1500x800');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+        }
+        .hero-section p {
+            font-size: 1.5rem;
+        }
+        .feature-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        .feature-icon {
+            font-size: 3rem;
+            color: #007bff;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        
-        <div th:insert="header :: header"></div>
-        
-        
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <h2>Why Choose Us?</h2>
-                <p>Our platform is designed to help you:</p>
-                <ul>
-                    <li>Easily create and manage projects.</li>
-                    <li>Share your projects with a clear title, description, and link.</li>
-                    <li>Collaborate with others through the forum.</li>
-                    <li>Stay organized and focused on your goals.</li>
-                </ul>
+    <!-- Шапка -->
+
+    <!-- Герой-секция -->
+    <div class="hero-section">
+        <div class="container">
+            <h1>Добро пожаловать на нашу платформу!</h1>
+            <p class="lead">Место для обмена, совместной работы и демонстрации ваших проектов.</p>
+            <a class="btn btn-custom btn-lg" th:href="@{/project/list}" role="button">Исследовать проекты</a>
+        </div>
+    </div>
+
+    <!-- Секция возможностей -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card text-center p-4">
+                    <i class="fas fa-project-diagram feature-icon mb-3"></i>
+                    <h3>Создавайте проекты</h3>
+                    <p>Легко создавайте и управляйте своими проектами</p>
+                </div>
             </div>
-            <div class="col-md-6">
-                <h2>Get Started</h2>
-                <p>Ready to start your next project? Click below to begin!</p>
-                <a class="btn btn-success" th:href="@{/project/list}">View Projects</a>
-                <a class="btn btn-secondary ml-2" th:href="@{/forum}">Visit Forum</a>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card text-center p-4">
+                    <i class="fas fa-users feature-icon mb-3"></i>
+                    <h3>Давайте обратную связь</h3>
+                    <p>Пишите комментарии под интересными вам проектами</p>
+                </div>
             </div>
-            <div class="jumbotron text-center mt-4">
-                <h1 class="display-4">Welcome to Our Platform!</h1>
-                <p class="lead">A place to share, collaborate, and showcase your projects.</p>
-                <hr class="my-4">
-                <p>Create, manage, and explore projects with ease. Whether you're working solo or as part of a team, our platform is designed to help you organize and share your ideas effectively.</p>
-                <a class="btn btn-primary btn-lg" th:href="@{/project/list}" role="button">Explore Projects</a>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card text-center p-4">
+                    <i class="fas fa-tasks feature-icon mb-3"></i>
+                    <h3>Будьте организованы</h3>
+                    <p>Следите за своими целями и сосредоточьтесь на самом важном.</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
+    <!-- Секция призыва к действию -->
+    <div class="bg-light py-5 mt-5">
+        <div class="container text-center">
+            <h2>Готовы начать?</h2>
+            <p class="lead">Присоединяйтесь к нашей платформе сегодня и начните создавать потрясающие проекты!</p>
+            <a class="btn btn-custom btn-lg" th:href="@{/user/register}" role="button">Зарегистрироваться</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS и зависимости -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

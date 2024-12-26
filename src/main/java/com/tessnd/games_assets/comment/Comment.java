@@ -1,10 +1,16 @@
 package com.tessnd.games_assets.comment;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import com.tessnd.games_assets.project.Project;
 import com.tessnd.games_assets.user.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +23,7 @@ import lombok.Data;
 @Entity
 @Table(name = "comments")
 @Data
+@EntityListeners(AuditingEntityListener.class)
 public class Comment {
 
     @Id
@@ -33,4 +40,7 @@ public class Comment {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id")
     private Project project;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
 }

@@ -26,11 +26,11 @@ public class UserService {
 
     public User registerUser(UserCreateDTO user) {
         if (userRepository.existsByUsername(user.getUsername())) {
-            throw new UsernameAlreadyTakenException("Username is already taken!");
+            throw new UsernameAlreadyTakenException("Логин уже занят!");
         }
 
         if (userRepository.existsByEmail(user.getEmail())) {
-            throw new EmailAlreadyTakenException("Email is already taken!");
+            throw new EmailAlreadyTakenException("Электронная почта уже занята!");
         }
         
 
