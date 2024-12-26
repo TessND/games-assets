@@ -15,6 +15,7 @@
                 <tr>
                     <th>Название</th>
                     <th>Описание</th>
+                    <th>Тип проекта</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,6 +24,7 @@
                         <a th:href="@{/project/{id}(id=${project.id})}" th:text="${project.title}"></a>
                     </td>
                     <td th:text="${project.description}"></td>
+                    <td th:text="${project.projectType.name}"></td>
                 </tr>
             </tbody>
         </table>

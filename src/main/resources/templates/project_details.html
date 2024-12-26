@@ -13,7 +13,6 @@
             <div class="card-body">
                 <h1 class="card-title" th:text="${project.title}"></h1>
                 <p class="card-text" th:text="${project.description}"></p>
-                <a th:href="${project.link}" class="card-link" th:text="${project.link}"></a>
                 <p class="text-muted" th:text="'Тип: ' + ${project.projectType.name}"></p>
                 <p class="text-muted" th:text="'Дата создания: ' + ${#temporals.format(project.createdAt, 'dd-MM-yyyy HH:mm:ss')}"></p>
                 <p class="text-muted" th:text="'Автор: ' + ${project.user.username}"></p>
