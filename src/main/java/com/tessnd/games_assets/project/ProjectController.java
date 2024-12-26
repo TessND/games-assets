@@ -53,6 +53,9 @@ public class ProjectController {
 
     @GetMapping("/{id}")
     public String showProjectDetails(@PathVariable Long id, Model model, Principal principal) {
+        if (projectService.getProjectById(id) == null) {
+            return "redirect:/project/list";
+        }
         model.addAttribute("isProjectOwner", projectService.isProjectOwner(id, principal.getName()));
         model.addAttribute("project", projectService.getProjectById(id));
         model.addAttribute("comments", commentService.getAllByProject(projectService.getProjectById(id)));
@@ -75,6 +78,9 @@ public class ProjectController {
 
     @GetMapping("/{id}/download")
     public ResponseEntity<Resource> downloadFile(@PathVariable Long id, Model model) throws IOException {
+        if (projectService.getProjectById(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
         String filePath = projectService.getProjectById(id).getFilePath();
         Resource fileResource = fileService.load(filePath);
         return ResponseEntity.ok()
@@ -85,6 +91,9 @@ public class ProjectController {
 
     @GetMapping("/{id}/edit")
     public String showProjectEditForm(@PathVariable Long id, Model model, Principal principal) {
+        if (projectService.getProjectById(id) == null) {
+            return "redirect:/project/list";
+        }
         if (!projectService.isProjectOwner(id, principal.getName())) {
             return "redirect:/project/list";
         }
@@ -96,6 +105,9 @@ public class ProjectController {
 
     @PostMapping("/{id}/edit")
     public String editProject(@PathVariable Long id, @ModelAttribute ProjectCreateDTO project, Model model, Principal principal) throws IOException {
+        if (projectService.getProjectById(id) == null) {
+            return "redirect:/project/list";
+        }
         if (!projectService.isProjectOwner(id, principal.getName())) {
             return "redirect:/project/list";
         }
@@ -105,6 +117,9 @@ public class ProjectController {
 
     @GetMapping("/{id}/delete")
     public String deleteProject(@PathVariable Long id, Principal principal, Model model) throws IOException {
+        if (projectService.getProjectById(id) == null) {
+            return "redirect:/project/list";
+        }
         if (!projectService.isProjectOwner(id, principal.getName())) {
             return "redirect:/project/list";
         }
@@ -114,6 +129,9 @@ public class ProjectController {
 
     @GetMapping("/{id}/comments/create")
     public String showCommentCreationForm(@PathVariable Long id, Model model) {
+        if (projectService.getProjectById(id) == null) {
+            return "redirect:/project/list";
+        }
         model.addAttribute("comment", new Comment());
         model.addAttribute("project", projectService.getProjectById(id));
         return "comment_create";
@@ -122,6 +140,9 @@ public class ProjectController {
 
     @PostMapping("/{id}/comments/create")
     public String createComment(@PathVariable Long id, @ModelAttribute CommentCreateDTO comment, Model model, Principal principal) {
+        if (projectService.getProjectById(id) == null) {
+            return "redirect:/project/list";
+        }
         commentService.save(comment, userService.getUserByUsername(principal.getName()), projectService.getProjectById(id));
         return "redirect:/project/" + id;
     }
