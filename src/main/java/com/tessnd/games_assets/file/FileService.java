@@ -26,7 +26,12 @@ public class FileService {
 
         // Generate a unique file name
         String originalFileName = file.getOriginalFilename();
-        String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        int dotIndex = originalFileName.lastIndexOf(".");
+        if (dotIndex == -1) {
+            throw new IOException("Invalid file name: " + originalFileName);
+        }
+        String fileExtension = originalFileName.substring(dotIndex);
+
         String uniqueFileName = UUID.randomUUID().toString() + fileExtension;
 
         // Save the file

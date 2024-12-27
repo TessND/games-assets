@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить сообщение</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div th:insert="header :: header"></div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="text-center">Добавить сообщение</h2>
+                    </div>
+                    <div class="card-body">
+                        <!-- Form for creating a message -->
+                        <form th:action="@{/forum/{id}/messages/create(id=${thread.id})}" th:object="${message}" method="post">
+                            <!-- Content Field -->
+                            <div class="form-group">
+                                <label for="content">Сообщение:</label>
+                                <textarea id="content" th:field="*{content}" class="form-control" rows="4" required></textarea>
+                                <div class="text-danger" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+                            </div>
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary w-100">Отправить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

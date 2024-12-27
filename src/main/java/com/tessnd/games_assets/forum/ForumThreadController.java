@@ -3,6 +3,7 @@ package com.tessnd.games_assets.forum;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tessnd.games_assets.project.ProjectCreateDTO;
+import com.tessnd.games_assets.user.User;
 import com.tessnd.games_assets.user.UserService;
 import com.tessnd.games_assets.user.exceptions.ForumThreadNotFoundException;
 
@@ -139,6 +141,48 @@ public class ForumThreadController {
             forumThreadService.deleteForumThread(id);
             return "redirect:/forum/list";
         } catch (ForumThreadNotFoundException e) {
+            return "redirect:/forum/list";
+        }
+    }
+
+    @GetMapping("/{id}/messages/create")
+    public String showMessageCreationForm(@PathVariable Long id, Model model) {
+        try {
+            // Add a new ForumMessageCreateDTO object to the model
+            model.addAttribute("message", new ForumMessageCreateDTO());
+            // Add the thread details to the model
+            model.addAttribute("thread", forumThreadService.getForumThreadById(id));
+            return "message_create"; // Return the template for creating a message
+        } catch (ForumThreadNotFoundException e) {
+            // Handle the case where the thread is not found
+            return "redirect:/forum/list";
+        }
+    }
+
+        @PostMapping("/{id}/messages/create")
+    public String createMessage(
+            @PathVariable Long id,
+            @Valid @ModelAttribute("message") ForumMessageCreateDTO forumMessageCreateDTO,
+            BindingResult bindingResult,
+            Model model,
+            Principal principal) {
+        try {
+            // Check for validation errors
+            if (bindingResult.hasErrors()) {
+                // If there are validation errors, return to the form with error messages
+                model.addAttribute("thread", forumThreadService.getForumThreadById(id));
+                return "message_create";
+            }
+
+            // Get the current user
+            User user = userService.getUserByUsername(principal.getName());
+            // Get the thread
+            ForumThread thread = forumThreadService.getForumThreadById(id);
+            // Save the message
+            forumMessageService.save(forumMessageCreateDTO, user, thread);
+            return "redirect:/forum/{id}";
+        } catch (ForumThreadNotFoundException e) {
+            // Handle the case where the thread is not found
             return "redirect:/forum/list";
         }
     }
