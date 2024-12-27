@@ -26,14 +26,12 @@
                             <strong>Создано:</strong> <span th:text="${#temporals.format(thread.createdAt, 'dd.MM.yyyy HH:mm')}">Дата создания</span>
                         </p>
                     </div>
-                    <div class="card-footer">
-                        <!-- Кнопка для возврата к списку тем -->
-                        <a th:href="@{/forum/list}" class="btn btn-secondary">Назад к списку тем</a>
-                        <!-- Кнопка для редактирования темы (если пользователь является автором) -->
-                        <a th:if="${isForumThreadOwner}" th:href="@{/forum/{id}/edit(id=${thread.id})}" class="btn btn-primary ms-2">Редактировать тему</a>
-                        <!-- Кнопка для удаления темы (если пользователь является автором) -->
-                        <form th:if="${isForumThreadOwner}" th:action="@{/forum/{id}/delete(id=${thread.id})}" method="post" class="d-inline ms-2">
-                            <button type="submit" class="btn btn-danger">Удалить тему</button>
+                    <div class="card-footer" th:if="${isForumThreadOwner}">
+                        <!-- Кнопка для редактирования темы -->
+                        <a th:href="@{/forum/{id}/edit(id=${thread.id})}" class="btn btn-primary mr-2">Редактировать</a>
+                        <!-- Кнопка для удаления темы -->
+                        <form th:action="@{/forum/{id}/delete(id=${thread.id})}" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger">Удалить</button>
                         </form>
                     </div>
                 </div>
@@ -59,25 +57,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="deleteThreadModal" tabindex="-1" aria-labelledby="deleteThreadModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteThreadModalLabel">Подтверждение удаления</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Вы уверены, что хотите удалить тему "<span th:text="${thread.title}"></span>"? Это действие нельзя отменить.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <!-- Delete Button with JavaScript Redirection -->
-                    <a th:href="@{/forum/{id}/delete(id=${thread.id})}" class="btn btn-danger">Удалить</a>
                 </div>
             </div>
         </div>

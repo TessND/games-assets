@@ -46,6 +46,7 @@ public class ForumThreadService {
             throw new ForumThreadNotFoundException("Forum thread not found");
         }
         forumMessageService.deleteAllByForumThreadId(id);
+        forumThreadRepository.deleteById(id);
     }
 
     @Transactional

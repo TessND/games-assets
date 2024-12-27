@@ -129,15 +129,13 @@ public class ForumThreadController {
         }
     }
 
-    @GetMapping("/{id}/delete")
-    public String deleteThread(@PathVariable Long id, Principal principal) {
+    @PostMapping("/{id}/delete")
+    public String deleteThread(@PathVariable Long id, Principal principal, Model model) {
+        // Check if the current user is the owner of the thread
+        if (!forumThreadService.isThreadOwner(id, principal.getName())) {
+            return "redirect:/forum/list";
+        }
         try {
-            // Check if the current user is the owner of the thread
-            if (!forumThreadService.isThreadOwner(id, principal.getName())) {
-                return "redirect:/forum/list";
-            }
-
-            // Delete the thread
             forumThreadService.deleteForumThread(id);
             return "redirect:/forum/list";
         } catch (ForumThreadNotFoundException e) {
