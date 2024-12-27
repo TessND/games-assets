@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Редактировать проект</title>
+    <title>Редактировать тему</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-4">
-        <h1 class="mb-4">Редактировать проект</h1>
+        <h1 class="mb-4">Редактировать тему</h1>
 
-        <!-- Form for editing a project -->
-        <form th:action="@{/project/{id}/edit(id=${projectIdToEdit})}" th:object="${project}" method="post" enctype="multipart/form-data" class="needs-validation">
+        <!-- Form for editing a forum thread -->
+        <form th:action="@{/forum/{id}/edit(id=${threadIdToEdit})}" th:object="${thread}" method="post" class="needs-validation">
             <!-- Title Field -->
             <div class="form-group">
                 <label for="title">Название:</label>
@@ -26,30 +26,6 @@
                 <textarea id="description" th:field="*{description}" class="form-control" rows="4" required></textarea>
                 <div th:if="${#fields.hasErrors('description')}" class="invalid-feedback d-block">
                     <span th:errors="*{description}">Ошибка в описании</span>
-                </div>
-            </div>
-
-            <!-- Project Type Field -->
-            <div class="form-group">
-                <label for="projectTypeId">Тип проекта:</label>
-                <select id="projectTypeId" th:field="*{projectTypeId}" class="form-control" required>
-                    <option value="">Выберите тип проекта</option>
-                    <option th:each="projectType : ${projectTypes}"
-                            th:value="${projectType.id}"
-                            th:text="${projectType.name}">
-                    </option>
-                </select>
-                <div th:if="${#fields.hasErrors('projectTypeId')}" class="invalid-feedback d-block">
-                    <span th:errors="*{projectTypeId}">Ошибка в типе проекта</span>
-                </div>
-            </div>
-
-            <!-- File Field -->
-            <div class="form-group">
-                <label for="file">Файл:</label>
-                <input type="file" id="file" th:field="*{file}" class="form-control-file">
-                <div th:if="${#fields.hasErrors('file')}" class="invalid-feedback d-block">
-                    <span th:errors="*{file}">Ошибка в файле</span>
                 </div>
             </div>
 

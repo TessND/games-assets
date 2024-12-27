@@ -27,8 +27,8 @@ public class CommentService {
     }
 
     @Transactional
-    public void delete(Comment comment) {
-        commentRepository.delete(comment);
+    public void delete(Long id) {
+        commentRepository.deleteById(id);
     }
 
     public List<Comment> getAllByProject(Project project) {
@@ -39,4 +39,8 @@ public class CommentService {
     public void deleteAllByProjectId(Long id) {
         commentRepository.deleteByProjectId(id);
     }
+
+    // public boolean isCommentOwner(Long commentId, String name) {
+    //     return commentRepository.findById(commentId).get().getUser().getUsername().equals(name);
+    // }
 }

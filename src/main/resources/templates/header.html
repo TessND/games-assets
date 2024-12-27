@@ -18,9 +18,13 @@
                     <li class="nav-item active">
                         <a class="nav-link" th:href="@{/project/list}">Проекты <span class="sr-only">(текущая)</span></a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" th:href="@{/forum}">Форум</a>
-                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/forum/list}">Форум</a>
+                    </li>
+                    <!-- Profile link if authenticated -->
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" sec:authentication="name"></a>
+                    </li>
                     <!-- Logout link if authenticated -->
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="nav-link" th:href="@{/logout}">Выйти</a>

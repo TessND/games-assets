@@ -16,8 +16,10 @@
                 <form th:action="@{/project/{id}/comments/create(id=${project.id})}" th:object="${comment}" method="post">
                     <div class="form-group">
                         <label for="text">Поле ввода:</label>
-                        <textarea id="text" name="text" th:field="*{text}" class="form-control" rows="4" required></textarea>
-                        <div class="invalid-feedback">Пожалуйста введите текст</div>
+                        <textarea id="text" th:field="*{text}" class="form-control" rows="4" required></textarea>
+                        <div th:if="${#fields.hasErrors('text')}" class="invalid-feedback d-block">
+                            <span th:errors="*{text}">Ошибка в тексте комментария</span>
+                        </div>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Добавить" class="btn btn-primary"/>
@@ -31,27 +33,5 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-    <!-- JavaScript for form validation -->
-    <script>
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                var forms = document.getElementsByTagName('form');
-                // Loop over them and prevent submission
-                var validation = Array.prototype.filter.call(forms, function(form) {
-                    form.addEventListener('submit', function(event) {
-                        if (form.checkValidity() === false) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                    }, false);
-                });
-            }, false);
-        })();
-    </script>
 </body>
 </html>

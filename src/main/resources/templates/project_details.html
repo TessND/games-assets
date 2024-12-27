@@ -21,7 +21,30 @@
             <!-- Edit and Delete Buttons for Project Owner -->
             <div class="card-footer" th:if="${isProjectOwner}">
                 <a th:href="@{/project/{id}/edit(id=${project.id})}" class="btn btn-primary mr-2">Редактировать</a>
-                <a th:href="@{/project/{id}/delete(id=${project.id})}" class="btn btn-danger">Удалить</a>
+                <!-- Delete Button -->
+                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteProjectModal">Удалить</button>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div class="modal fade" id="deleteProjectModal" tabindex="-1" role="dialog" aria-labelledby="deleteProjectModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteProjectModalLabel">Подтверждение удаления</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Вы уверены, что хотите удалить проект "<span th:text="${project.title}"></span>"? Это действие нельзя отменить.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                        <!-- Delete Button with JavaScript Redirection -->
+                        <a th:href="@{/project/{id}/delete(id=${project.id})}" class="btn btn-danger">Удалить</a>
+                    </div>
+                </div>
             </div>
         </div>
 
