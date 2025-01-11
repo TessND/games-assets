@@ -47,7 +47,12 @@
                 </div>
             </div>
         </div>
-
+        <!-- Add Message Button -->
+        <div class="mt-4">
+            <a th:href="@{/forum/{id}/messages/create(id=${thread.id})}" class="btn btn-success">Создать сообщение</a>
+            <a th:href="@{/forum/list}" class="btn btn-secondary">Назад к темам</a>
+        </div>
+        <div class="mt-4"></div>
         <!-- Forum Messages Section -->
         <div class="card">
             <div class="card-header">
@@ -64,11 +69,7 @@
             </div>
         </div>
 
-        <!-- Add Message Button -->
-        <div class="mt-4">
-            <a th:href="@{/forum/{id}/messages/create(id=${thread.id})}" class="btn btn-success">Создать сообщение</a>
-            <a th:href="@{/forum/list}" class="btn btn-secondary">Назад к темам</a>
-        </div>
+        
     </div>
 
     <!-- Bootstrap JS and dependencies -->

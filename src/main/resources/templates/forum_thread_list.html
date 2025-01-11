@@ -11,12 +11,15 @@
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <h1 class="text-center mb-4">Форум</h1>
-
+                
+                <div class="mt-4 text-center">
+                    <a th:href="@{/forum/create}" class="btn btn-primary">Создать новое обсуждение</a>
+                </div>
                 <!-- Error Message -->
                 <div th:if="${error}" class="alert alert-danger" role="alert">
                     <span th:text="${error}"></span>
                 </div>
-
+                <div class="mt-4"></div>
                 <!-- Thread List -->
                 <div class="list-group">
                     <a th:each="thread : ${threads}" th:href="@{/forum/{id}(id=${thread.id})}" class="list-group-item list-group-item-action">
@@ -26,9 +29,7 @@
                 </div>
 
                 <!-- Create Thread Button -->
-                <div class="mt-4 text-center">
-                    <a th:href="@{/forum/create}" class="btn btn-primary">Создать новое обсуждение</a>
-                </div>
+                
             </div>
         </div>
     </div>

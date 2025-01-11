@@ -42,12 +42,18 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
                         <!-- Delete Button with JavaScript Redirection -->
-                        <a th:href="@{/project/{id}/delete(id=${project.id})}" class="btn btn-danger">Удалить</a>
+                        <form th:action="@{/project/{id}/delete(id=${project.id})}" method="get" class="d-inline">
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-
+        <div class="mt-4">
+            <a th:href="@{/project/{id}/comments/create(id=${project.id})}" class="btn btn-success">Добавить комментарий</a>
+            <a th:href="@{/project/list}" class="btn btn-secondary">Назад к проектам</a>
+        </div>
+        <div class="mt-4"></div>
         <!-- Comments Section -->
         <div class="card">
             <div class="card-header">
@@ -65,10 +71,7 @@
         </div>
 
         <!-- Add Comment Button -->
-        <div class="mt-4">
-            <a th:href="@{/project/{id}/comments/create(id=${project.id})}" class="btn btn-success">Добавить комментарий</a>
-            <a th:href="@{/project/list}" class="btn btn-secondary">Назад к проектам</a>
-        </div>
+        
     </div>
 
     <!-- Bootstrap JS and dependencies -->
